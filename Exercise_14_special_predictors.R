@@ -28,7 +28,7 @@ library(gridExtra)
 # To explore some of the more advanced predictor types, we will need a new dataset. Let's download the weight_loss dataset.	
 
 
-data_weightloss = read_csv("https://tinyurl.com/weightloss-data")	
+data_weightloss = read_csv("https://raw.githubusercontent.com/kekecsz/PSZB17-210-Data-analysis-seminar/master/seminar_8/weight_loss_data.csv")	
 
 
 # This dataset contains simulated (fake) data. It is about a study where different types of interventions were tested to help overweight people to lose weight.	

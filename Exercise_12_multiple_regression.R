@@ -21,12 +21,26 @@
 
 library(psych) # for describe	
 library(lm.beta) # for lm.beta	
-library(rgl) # for scatter3d	
 library(tidyverse) # for tidy format	
 library(gridExtra) # for grid.arrange	
 
+### Load custom functions
 
+#This is a custom function that I wrote which helps in creating the final table for the regression coefficients.
 
+coef_table = function(model){
+  require(lm.beta)
+  mod_sum = summary(model)
+  mod_sum_p_values = as.character(round(mod_sum$coefficients[,4], 3))	
+  mod_sum_p_values[mod_sum_p_values != "0" & mod_sum_p_values != "1"] = substr(mod_sum_p_values[mod_sum_p_values != "0" & mod_sum_p_values != "1"], 2, nchar(mod_sum_p_values[mod_sum_p_values != "0" & mod_sum_p_values != "1"]))	
+  mod_sum_p_values[mod_sum_p_values == "0"] = "<.001"	
+  
+  
+  mod_sum_table = cbind(as.data.frame(round(cbind(coef(model), confint(model), c(0, lm.beta(model)$standardized.coefficients[c(2:length(model$coefficients))])), 2)), mod_sum_p_values)	
+  names(mod_sum_table) = c("b", "95%CI lb", "95%CI ub", "Std.Beta", "p-value")	
+  mod_sum_table["(Intercept)","Std.Beta"] = "0"	
+  return(mod_sum_table)
+}
 
 # ## Load data about housing prices in King County, USA 	
 
@@ -39,7 +53,7 @@ library(gridExtra) # for grid.arrange
 # You can load the data with the following code	
 
 
-data_house = read_csv("https://bit.ly/2DpwKOr")	
+data_house = read_csv("https://raw.githubusercontent.com/kekecsz/PSYP13_Data_analysis_class-2019/master/data_house_small_sub.csv")	
 
 
 # ## Check the dataset	
@@ -148,8 +162,7 @@ grid.arrange(plot1, plot2, nrow = 1)
 # Alternatively, you can use a 3 dimensional plot to visualize the regression plane.	
 
 
-# plot the regression plane (3D scatterplot with regression plane)	
-scatter3d(price ~ sqm_living + grade, data = data_house)	
+# (Alternatively, you can use a 3 dimensional plot to visualize the regression plane, but there are no good tools for that right now that I know of.)
 	
 
 
@@ -160,7 +173,7 @@ scatter3d(price ~ sqm_living + grade, data = data_house)
 # Remember that you need to provide the predictors in a dataframe with the predictors having the same variable name as in the model formula.	
 
 
-sqm_living = c(600, 600, 1100, 1100)	
+sqm_living = c(60, 60, 110, 110)	
 grade = c(6, 9, 6, 9)	
 newdata_to_predict = as.data.frame(cbind(sqm_living, grade))	
 predicted_price = predict(mod_house1, newdata = newdata_to_predict)	
@@ -174,7 +187,7 @@ cbind(newdata_to_predict, predicted_price)
 
 # First of all, you will have to specify the regression model you built. For example: 	
 
-# "In a linar regression model we predicted housing price (in USD) with square footage of living area (in ft) and King County housing grade as predictors."	
+# "In a linar regression model we predicted housing price (in USD) with size of living area (in m^2) and King County housing grade as predictors."	
 
 # Next you will have to indicate the effectiveness of the model. You can do this by after a text summary of the results, giving information about the F-test of the whole model, specifically, the F value, the degrees of freedom (note that there are two degrees of freedom for the F test), and the p-value. You can find all this information in the model summary. Also provide information about the model fit using the adjusted R squared from the model summary and the AIC values provided by the AIC() function.	
 
@@ -203,18 +216,16 @@ lm.beta(mod_house1)
 # The final table should look something like this:	
 
 
-sm_p_values = as.character(round(sm$coefficients[,4], 3))	
-sm_p_values[sm_p_values != "0" & sm_p_values != "1"] = substr(sm_p_values[sm_p_values != "0" & sm_p_values != "1"], 2, nchar(sm_p_values[sm_p_values != "0" & sm_p_values != "1"]))	
-sm_p_values[sm_p_values == "0"] = "<.001"	
-	
-	
-sm_table = cbind(as.data.frame(round(cbind(coef(mod_house1), confint(mod_house1), c(0, lm.beta(mod_house1)$standardized.coefficients[c(2,3)])), 2)), sm_p_values)	
-names(sm_table) = c("b", "95%CI lb", "95%CI ub", "Std.Beta", "p-value")	
-sm_table["(Intercept)","Std.Beta"] = "0"	
+## Final coefficient table
+
+# This is how the final coefficient table should look like.
+# This was generated using the coef_table() function. This is one of my own functions that is included in the top of this code, but it is not necessary to use this function, you can also manually write out all
+# relevant numbers from the outputs above.
 
 
+sm_table = coef_table(mod_house1)
+sm_table
 
-sm_table	
 
 
 # You should refer to your course book (Chapter 15 - Navarro D. (2015). Learning statistics with R: A tutorial for psychology students and other beginners (5th ed.). http://www.compcogscisydney.com/learning-statistics-with-r.html) for the interpretation of the data reported above.	

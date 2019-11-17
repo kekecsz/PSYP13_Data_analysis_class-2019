@@ -33,7 +33,7 @@ library(tidyverse) # for tidy format
 # You can load the data with the following code	
 
 
-data_house = read_csv("https://bit.ly/2DpwKOr")	
+data_house = read_csv("https://raw.githubusercontent.com/kekecsz/PSYP13_Data_analysis_class-2019/master/data_house_small_sub.csv")	
 
 
 # ## Check the dataset	

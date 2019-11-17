@@ -19,7 +19,6 @@
 
 
 library(psych) # for describe	
-library(gsheet) # to read data from google sheets	
 library(tidyverse) # for tidy code	
 
 
@@ -56,12 +55,10 @@ error_plotter <- function(mod, col = "black", x_var = NULL){
 
 # Lets say we are a complany that sells shows, and we would like to be able to tell people's shoe size just by knowing their height. Maybe because our branch is located at a place with lots of tourists, who do not know their european shoe size.	
 
-# https://goo.gl/forms/nNXWwCPTbdHxGrBO2	
-
 # You can load the data we just collected with the following code	
 
 
-mydata = as_tibble(read.csv("https://bit.ly/2Q0qZgP"))	
+mydata = as_tibble(read.csv("https://raw.githubusercontent.com/kekecsz/PSYP13_Data_analysis_class-2018/master/Shoe%20and%20height%20data%20PSYP13-HT18.csv"))	
 
 
 # ## Check the dataset for irregularities	
