@@ -188,6 +188,15 @@ We have no cases that would have a Cook's distance higher than 1, but we have se
 
 Lets test whether the assumptions of multiple regression hold true, and determine if we need to do anything with these cases.
 
+
+**_____________Practice______________***
+
+Using the techniques that you learned today, run model diagnostics on a new linear model where you predict price by "sqm_living" "sqm_living15", and "yr_built"" as predictors.
+
+
+**___________________________________***
+
+
 # Assumptions of linear regression
 
 * **Normality**: The residuals of the model must be normally distributed
@@ -596,7 +605,7 @@ http://statisticsbyjim.com/regression/multicollinearity-in-regression-analysis/
 
 **_____________Practice______________***
 
-Using the techniques that you learned today, run model diagnostics on a new linear model where you predict price by "sqm_living" "sqm_living15", and "yr_built"" as predictors.
+Using the techniques that you learned today, run model diagnostics on a new linear model where you predict price by "sqm_living" "sqm_living15", "yr_built", and "condition" as predictors.
 
 
 
