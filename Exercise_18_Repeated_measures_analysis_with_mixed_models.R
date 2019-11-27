@@ -24,6 +24,7 @@ library(lme4) # for lmer() mixed models
 library(lmerTest)  # for significance test on lmer() mixed models	
 library(cAIC4) # for cAIC	
 library(r2glmm) # for r2beta	
+library(MuMIn) # for r.squaredGLMM	
 
 
 
@@ -276,6 +277,9 @@ mod_rep_int_quad = lmer(wound_rating ~ days_centered + I(days_centered^2) + dist
 
 # Marginal R squared	
 r2beta(mod_rep_int_quad, method = "nsj", data = data_wound_long)	
+	
+# marginal and conditional R squared values	
+r.squaredGLMM(mod_rep_int_quad)	
 	
 # Conditional AIC	
 cAIC(mod_rep_int_quad)$caic	

@@ -24,6 +24,7 @@ library(cAIC4) # for cAIC
 library(r2glmm) # for r2beta		
 library(lme4) # for lmer	
 library(lmerTest) # to get singificance test in lmer	
+library(MuMIn) # for r.squaredGLMM	
 
 
 
@@ -284,13 +285,21 @@ anova(mod_rnd_int, mod_rnd_slope)
 
 # Model R squared and confidence interval:	
 
-# The r2beta() function computes the marginal R squared based on Nakagawa and Schielzeth (2013). This is a special type of the R squared statistic that shows the proportion of variance explained by the fixed factor(s) alone, when not taking into account the random effect terms. There is no classical F test p-value attached to this statistic, but significance can be interpreted from the confidence intervals. If the 95% CI does not contain 0, it means that the fixed effect term(s) explain a significant portion of the variation of the outcome compared to the mean (the null model).	
+# The r2beta() function computes the marginal R squared based on Nakagawa, Johnson & Schielzeth (2017). This is a special type of the R squared statistic that shows the proportion of variance explained by the fixed factor(s) alone, when not taking into account the random effect terms. There is no classical F test p-value attached to this statistic, but significance can be interpreted from the confidence intervals. If the 95% CI does not contain 0, it means that the fixed effect term(s) explain a significant portion of the variation of the outcome compared to the mean (the null model).	
+
+# Additionally, a point estimate of both the marginal and the conditional R squared value can be obtained via the r.squaredGLMM() function from the MuMIn package. This function also uses the formula published by Nakagawa, Johnson & Schielzeth (2017).  	
 
 # Reference:	
-# Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133-142. and Johnson, P. C. (2014). Extension of Nakagawa & Schielzeth's R2GLMM to random slopes models. Methods in Ecology and Evolution, 5(9), 944-946.	
+# Nakagawa, S., Johnson, P.C.D., Schielzeth, H. (2017) The coefficient of determination R2	
+# and intraclass correlation coefficient from generalized linear mixed-effects models revisited and expanded. J. R. Soc. Interface 14: 20170213.	
 
 
-r2beta(mod_rnd_slope, method = "nsj", data = data_bully_slope)		
+
+# marginal R squared with confidence intervals	
+r2beta(mod_rnd_slope, method = "nsj", data = data_bully_slope)	
+	
+# marginal and conditional R squared values	
+r.squaredGLMM(mod_rnd_slope)	
 
 
 
